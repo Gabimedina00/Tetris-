@@ -1,0 +1,21 @@
+{
+  "name": "tetris-",
+  "version": "1.0.0",
+  "description": "Tetris Typescript with TDD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gabimedina00/Tetris-.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Gabimedina00/Tetris-/issues"
+  },
+  "homepage": "https://github.com/Gabimedina00/Tetris-#readme"
+}
