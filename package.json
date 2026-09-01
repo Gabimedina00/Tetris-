@@ -4,7 +4,8 @@
   "description": "Tetris Typescript with TDD",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+  "test:coverage": "vitest run --coverage"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/Gabimedina00/Tetris-#readme",
   "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.11",
     "typescript": "^7.0.2",
     "vitest": "^4.1.11"
   }
