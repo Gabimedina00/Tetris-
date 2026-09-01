@@ -17,5 +17,9 @@
   "bugs": {
     "url": "https://github.com/Gabimedina00/Tetris-/issues"
   },
-  "homepage": "https://github.com/Gabimedina00/Tetris-#readme"
+  "homepage": "https://github.com/Gabimedina00/Tetris-#readme",
+  "devDependencies": {
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
+  }
 }
