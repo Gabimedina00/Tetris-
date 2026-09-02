@@ -27,5 +27,19 @@ public rotateRight(): void {
     }
     this.forma = nuevaForma;
 }
+public rotateLeft(): void {
+    const filas = this.forma.length;
+    const columnas = this.forma[0]!.length;
+    const nuevaForma: string[][] = [];
+
+    for (let i = columnas - 1; i >= 0; i--) {
+        const nuevaFila: string[] = [];
+        for (let j = 0; j < filas; j++) {
+            nuevaFila.push(this.forma[j]![i]!);
+    }
+    nuevaForma.push(nuevaFila);
+    }
+    this.forma = nuevaForma;
+}
 }
 
