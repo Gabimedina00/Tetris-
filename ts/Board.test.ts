@@ -16,3 +16,21 @@ it("agrega una pieza dentro de los límites del tablero", () => {
     const result = board.addPiece(piece, 0, 0);
     expect(result).toBe(true);
 });
+
+it("no agrega una pieza que se sale del tablero", () => {
+    const board = new Board();
+    const piece = new PieceSquare();
+    const result = board.addPiece(piece, 0, 9); // col 9 + ancho de pieza se sale de 10 columnas
+    expect(result).toBe(false);
+});
+
+it("mueve la pieza actual una fila hacia abajo si puede", () => {
+    const board = new Board();
+    const piece = new PieceSquare();
+    console.log("forma:", JSON.stringify(piece.getForma()));
+    board.addPiece(piece, 0, 0);
+
+    const result = board.moveDown();
+
+    expect(result).toBe(true);
+});
