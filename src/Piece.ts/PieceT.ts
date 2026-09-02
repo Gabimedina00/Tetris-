@@ -5,7 +5,7 @@ export class PieceT extends PieceBase {
         super("T", [
             ["1", "1", "1"],
             ["0", "1", "0"],
-            ["0", "1", "0"]
+            ["0", "0", "0"]
         ]);
     }
 }

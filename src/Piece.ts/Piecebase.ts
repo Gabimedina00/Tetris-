@@ -10,12 +10,5 @@ constructor(name: string, forma: string[][]) {
 public getForma(): string[][] {
     return this.forma;
 }
-
-public rotateRight(): void {
-}
-
-public rotateLeft(): void {
-
-}
 }
 
