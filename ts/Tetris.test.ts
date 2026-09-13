@@ -6,7 +6,7 @@ import { PieceSquare } from "../src/Piece.ts/Piecesquare.js";
 
 describe("Tetris", () => {
 
-    it("baja la pieza del tablero cuando recibe un tick", () =>{
+    it("Baja la pieza del tablero cuando recibe un tick", () =>{
         const clock = new Clock();
         const board = new Board();
         const piece = new PieceSquare();
@@ -18,7 +18,7 @@ describe("Tetris", () => {
         expect(board.grid[3]?.[0]).toBe("Square");
     });
 
-    it("se puede crear un juego", () => {
+    it("Se puede crear un juego", () => {
         const tetris = new Tetris();
 
         expect(tetris).toBeInstanceOf(Tetris);
@@ -54,3 +54,23 @@ describe("Tetris", () => {
         tetris.tick();
         expect(clock.getTicks()).toBe(3);})
 });
+
+it("Gana cuando completa la ultima fila", () => {
+    const board = new Board();
+
+    board.grid[19] = Array(10).fill("Square");
+
+    const tetris = new Tetris(new Clock(), board);
+
+    expect(tetris.hasWon()).toBe(true);
+});
+
+it("Pierde cuando se completa la primera fila", () => {
+    const board = new Board();
+
+    board.grid[0] = Array(10).fill("Square");
+
+    const tetris = new Tetris(new Clock(), board);
+
+    expect(tetris.hasLost()).toBe(true);
+})

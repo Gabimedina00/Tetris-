@@ -5,6 +5,9 @@ export class Tetris {
     private board: Board;
     private started: boolean = false;
     private clock: Clock;
+    private completedLines: number = 0;
+    private targetLines: number = 1;
+    
 
     constructor(clock: Clock = new Clock()
 , board: Board = new Board()) {
@@ -23,5 +26,12 @@ export class Tetris {
     tick(): void {
         this.clock.tick();
         this.board.moveDown();
+    }
+    hasWon(): boolean {
+    return this.board.grid[19]?.every(cell => cell !== null) ?? false;
+    }
+
+    hasLost(): boolean {
+    return this.board.grid[0]?.every(cell => cell !== null) ?? false;
     }
 }
