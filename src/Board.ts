@@ -4,7 +4,7 @@ import { PieceBase } from "../src/Piece.ts/Piecebase.js";
 
 export class Board {
 
-    public grid: (string | null)[][];
+    private grid: (string | null)[][];
 
     private currentPiece: PieceBase | null = null;
 
@@ -19,8 +19,17 @@ export class Board {
         this.grid = Array.from({ length: 20 }, () => Array(10).fill(null));
 
     }
+    getRowCount(): number {
+    return this.grid.length;
+}
 
+getColumnCount(): number {
+    return this.grid[0]?.length ?? 0;
+}
 
+getCell(row: number, col: number): string | null | undefined {
+    return this.grid[row]?.[col];
+}
 
     addPiece(piece: PieceBase, row: number, col: number): boolean {
 
@@ -40,9 +49,15 @@ export class Board {
 
 
 
-                    if (targetRow < 0 || targetRow >= 20 || targetCol < 0 || targetCol >= 10) {
-
-                        return false;
+                                    if (
+                    targetRow < 0 ||
+                    targetRow >= 20 ||
+                    targetCol < 0 ||
+                    targetCol >= 10 ||
+                    this.grid[targetRow]?.[targetCol] !== null
+                ) {
+                    return false;
+                
 
                     }
 
@@ -60,7 +75,7 @@ export class Board {
 
                 if (forma[i]![j]! === "1") {
 
-                    this.grid[row + i]![col + j]! = piece.name;
+                    this.grid[row + i]![col + j]! = piece.getName();
 
                 }
 
@@ -170,7 +185,13 @@ export class Board {
 
     }
 
+hasActivePiece(): boolean {
+    return this.currentPiece !== null;
+}
 
+lockPiece(): void {
+    this.currentPiece = null;
+}
 
     clearCompletedLines(): number {
 

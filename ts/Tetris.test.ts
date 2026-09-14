@@ -14,8 +14,8 @@ describe("Tetris", () => {
         board.addPiece(piece, 0, 0);
         const tetris = new Tetris(clock, board);
         tetris.tick();
-        expect(board.grid[1]?.[0]).toBeNull();
-        expect(board.grid[3]?.[0]).toBe("Square");
+        expect(board.getCell(1, 0)).toBeNull();
+        expect(board.getCell(3, 0)).toBe("Square");
     });
 
     it("Se puede crear un juego", () => {
@@ -53,24 +53,21 @@ describe("Tetris", () => {
         tetris.tick();
         tetris.tick();
         expect(clock.getTicks()).toBe(3);})
-});
 
-it("Gana cuando completa la ultima fila", () => {
+    it("pierde cuando una nueva pieza no puede entrar", () => {
     const board = new Board();
+    const blockingPiece = new PieceSquare();
 
-    board.grid[19] = Array(10).fill("Square");
+    board.addPiece(blockingPiece, 0, 4);
+    board.lockPiece();
 
     const tetris = new Tetris(new Clock(), board);
+    tetris.start();
 
-    expect(tetris.hasWon()).toBe(true);
-});
+    const entered = tetris.spawnPiece(new PieceSquare());
 
-it("Pierde cuando se completa la primera fila", () => {
-    const board = new Board();
-
-    board.grid[0] = Array(10).fill("Square");
-
-    const tetris = new Tetris(new Clock(), board);
-
+    expect(entered).toBe(false);
     expect(tetris.hasLost()).toBe(true);
-})
+    expect(tetris.state()).toBe(false);
+});
+});

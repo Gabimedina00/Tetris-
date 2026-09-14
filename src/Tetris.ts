@@ -1,12 +1,12 @@
 import { Clock } from "./Clock.js";
 import { Board } from "./Board.js";
+import { PieceBase } from "./Piece.ts/Piecebase.js";
 export class Tetris {
 
     private board: Board;
     private started: boolean = false;
     private clock: Clock;
-    private completedLines: number = 0;
-    private targetLines: number = 1;
+    private lost: boolean = false;
     
 
     constructor(clock: Clock = new Clock()
@@ -16,7 +16,7 @@ export class Tetris {
     }
 
     start(): void {
-        this.started = true;
+    this.started = !this.lost;
     }
 
     state(): boolean {
@@ -27,11 +27,15 @@ export class Tetris {
         this.clock.tick();
         this.board.moveDown();
     }
-    hasWon(): boolean {
-    return this.board.grid[19]?.every(cell => cell !== null) ?? false;
-    }
-
     hasLost(): boolean {
-    return this.board.grid[0]?.every(cell => cell !== null) ?? false;
+    return this.lost;
+}
+    spawnPiece(piece: PieceBase): boolean {
+        const entered = this.board.addPiece(piece, 0, 4);
+
+        this.lost = !entered;
+        this.started = this.started && entered;
+
+        return entered;
     }
 }

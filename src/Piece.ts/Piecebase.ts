@@ -1,15 +1,19 @@
 export abstract class PieceBase {
-protected forma: string[][];
-public readonly name: string;
+private forma: string[][];
+private readonly name: string;
 
 constructor(name: string, forma: string[][]) {
     this.name = name;
-    this.forma = forma;
+    this.forma = forma.map(fila => [...fila]);
 }
 
 public getForma(): string[][] {
-    return this.forma;
+    return this.forma.map(fila => [...fila]);;
 }
+public getName(): string {
+    return this.name;
+}
+
 public rotateRight(): void {
     const filas = this.forma.length;
     const columnas = this.forma[0]!.length;

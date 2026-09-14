@@ -5,9 +5,9 @@ import { PieceBase } from "../src/Piece.ts/Piecebase.js";
 
 it("Un tablero nuevo tiene 20 filas y 10 columnas vacias", () => {
     const board = new Board();
-    expect(board.grid.length).toBe(20);
-    expect(board.grid[0]?.length).toBe(10);
-    expect(board.grid[0]?.[0]).toBeNull();
+    expect(board.getRowCount()).toBe(20);
+    expect(board.getColumnCount()).toBe(10);
+    expect(board.getCell(0, 0)).toBeNull();
     })
 
 it("agrega una pieza dentro de los límites del tablero", () => {
@@ -35,12 +35,16 @@ it("mueve la pieza actual una fila hacia abajo si puede", () => {
     expect(result).toBe(true);
 });
 
-it("detecta y elimina una linea completa", () => {
+it("detecta y elimina lineas completas", () => {
     const board = new Board();
-    board.grid[19] = Array(10).fill("Test");
+
+    [0, 2, 4, 6, 8].forEach(col => {
+        board.addPiece(new PieceSquare(), 17, col);
+        board.lockPiece();
+    });
 
     const cleared = board.clearCompletedLines();
 
-    expect(cleared).toBe(1);
-    expect(board.grid[19].every(cell => cell === null)).toBe(true);
+    expect(cleared).toBe(2);
+    expect(board.getCell(19, 0)).toBeNull();
 });
