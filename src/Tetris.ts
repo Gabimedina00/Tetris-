@@ -7,7 +7,8 @@ export class Tetris {
     private started: boolean = false;
     private clock: Clock;
     private lost: boolean = false;
-    
+    private won: boolean = false;
+    private completedLines: number = 0;
 
     constructor(clock: Clock = new Clock()
 , board: Board = new Board()) {
@@ -16,7 +17,7 @@ export class Tetris {
     }
 
     start(): void {
-    this.started = !this.lost;
+    this.started = !this.lost && !this.won;
     }
 
     state(): boolean {
@@ -24,18 +25,52 @@ export class Tetris {
     }
 
     tick(): void {
-        this.clock.tick();
-        this.board.moveDown();
-    }
+    const gameRunning = !this.lost && !this.won;
+
+    gameRunning && this.advanceGame();
+}
+
+private advanceGame(): void {
+    this.clock.tick();
+
+    this.board.hasActivePiece() &&
+        (this.board.moveDown() || this.finishPiece());
+}
+
+private finishPiece(): boolean {
+    this.board.lockPiece();
+
+    const clearedLines = this.board.clearCompletedLines();
+    this.completedLines += clearedLines;
+
+    this.won = this.completedLines >= 2;
+    this.started = this.started && !this.won;
+
+    return true;
+}
     hasLost(): boolean {
     return this.lost;
 }
-    spawnPiece(piece: PieceBase): boolean {
-        const entered = this.board.addPiece(piece, 0, 4);
 
-        this.lost = !entered;
-        this.started = this.started && entered;
+hasWon(): boolean {
+    return this.won;
+}
 
-        return entered;
-    }
+getCompletedLines(): number {
+    return this.completedLines;
+}
+
+spawnPiece(piece: PieceBase): boolean {
+    const gameRunning = !this.lost && !this.won;
+
+    const entered =
+        gameRunning && this.board.addPiece(piece, 0, 4);
+
+    this.lost =
+        this.lost || (gameRunning && !entered);
+
+    this.started = this.started && entered;
+
+    return entered;
+}
 }

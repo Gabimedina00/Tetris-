@@ -68,6 +68,24 @@ describe("Tetris", () => {
 
     expect(entered).toBe(false);
     expect(tetris.hasLost()).toBe(true);
-    expect(tetris.state()).toBe(false);
-});
+    expect(tetris.state()).toBe(false);});
+    
+        it("gana cuando completa dos lineas", () => {
+    const board = new Board();
+
+    [0, 2, 4, 6].forEach(col => {
+        board.addPiece(new PieceSquare(), 17, col);
+        board.lockPiece();
+    });
+
+    board.addPiece(new PieceSquare(), 17, 8);
+
+    const tetris = new Tetris(new Clock(), board);
+    tetris.start();
+    tetris.tick();
+
+    expect(tetris.getCompletedLines()).toBe(2);
+    expect(tetris.hasWon()).toBe(true);
+    expect(tetris.state()).toBe(false);});
+
 });
